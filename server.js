@@ -82,6 +82,34 @@ app.put("/edit", async (req, res) => {
 |--------------------------------------------------------------------------
 */
 
+/*
+|--------------------------------------------------------------------------
+| DELETE /delete — remover ajuda pelo nome
+|--------------------------------------------------------------------------
+*/
+
+app.delete("/delete", async (req, res) => {
+  try {
+    const { nome } = req.body;
+
+    if (!nome) {
+      return res.status(400).json({ error: "Nome é obrigatório para deletar" });
+    }
+
+    const deleted = await Ajuda.findOneAndDelete({ nome });
+
+    if (!deleted) {
+      return res.status(404).json({ error: "Item não encontrado" });
+    }
+
+    res.json({ message: "Item removido com sucesso" });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 app.get("/all", async (req, res) => {
   try {
     const itens = await Ajuda.find();
@@ -96,4 +124,5 @@ app.get("/all", async (req, res) => {
 app.listen(process.env.PORT, () => {
   console.log(`API rodando em http://localhost:${process.env.PORT}`);
 });
+
 
