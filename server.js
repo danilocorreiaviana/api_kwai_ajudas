@@ -27,9 +27,9 @@ mongoose
 
 app.post("/add", async (req, res) => {
   try {
-    const { nome, link, nomeAjuda } = req.body;
+    const { nome, link} = req.body;
 
-    if (!nome || !link || !nomeAjuda) {
+    if (!nome || !link) {
       return res.status(400).json({ error: "Campos obrigatórios ausentes" });
     }
 
@@ -96,3 +96,4 @@ app.get("/all", async (req, res) => {
 app.listen(process.env.PORT, () => {
   console.log(`API rodando em http://localhost:${process.env.PORT}`);
 });
+
